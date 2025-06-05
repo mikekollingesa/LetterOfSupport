@@ -1,0 +1,25 @@
+name: Sync to Azure DevOps
+
+on:
+  push:
+    branches:
+      - main  # or your default branch
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout GitHub repo
+        uses: actions/checkout@v3
+
+      - name: Push to Azure DevOps
+        env:
+          AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
+        run: |
+          git config --global user.email "mike.kolling@ext.esa.int"
+          git config --global user.name "Mike Kolling"
+
+          git remote add azure https://www.dev.esa.int/esa-technical-capabilities/LetterOfSupport/_git/Letter%20of%20Support%20D365%20Solutions
+          git push azure --all
+          git push azure --tags
