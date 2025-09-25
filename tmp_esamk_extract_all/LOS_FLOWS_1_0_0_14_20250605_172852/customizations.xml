@@ -1,0 +1,345 @@
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25051.184" OrganizationSchemaType="Full" CRMServerServiceabilityVersion="9.2.25051.00184">
+  <Entities></Entities>
+  <Roles></Roles>
+  <Workflows>
+    <Workflow WorkflowId="{661437b5-1042-f011-877a-000d3a683473}" Name="Set Submitted Name and Email">
+      <JsonFileName>/Workflows/SetSubmittedNameandEmail-661437B5-1042-F011-877A-000D3A683473.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.12</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Set Submitted Name and Email" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{fb0ab673-641f-f011-998a-000d3a683473}" Name="Calculate Authorised Funding">
+      <JsonFileName>/Workflows/CalculateAuthorisedFunding-FB0AB673-641F-F011-998A-000D3A683473.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.7</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <BillingContext>[{"id":"esamk_LetterOfSupport","type":"UnifiedApp","metadata":{"displayName":"Authorisation of Funding"}}]</BillingContext>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Calculate Authorised Funding" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{843af4a9-e8e2-ef11-9342-6045bd13613d}" Name="ESA - LoS - Delivered">
+      <JsonFileName>/Workflows/ESA-LoS-Delivered-843AF4A9-E8E2-EF11-9342-6045BD13613D.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <BillingContext>[{"id":"esamk_LetterOfSupport","type":"UnifiedApp","metadata":{"displayName":"Letter Of Support"}}]</BillingContext>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="ESA - LoS - Delivered" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{37941467-0ddf-ef11-8eea-6045bddf725a}" Name="ESA Letter of Support - Send for Signature">
+      <JsonFileName>/Workflows/ESALetterofSupport-SendforSignature-37941467-0DDF-EF11-8EEA-6045BDDF725A.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.6</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <BillingContext>[{"id":"esamk_LetterOfSupport","type":"UnifiedApp","metadata":{"displayName":"Letter Of Support"}}]</BillingContext>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="ESA Letter of Support - Send for Signature" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{38941467-0ddf-ef11-8eea-6045bddf725a}" Name="ESA - LoS - Completed">
+      <JsonFileName>/Workflows/ESA-LoS-Completed-38941467-0DDF-EF11-8EEA-6045BDDF725A.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.6</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <BillingContext>[{"id":"esamk_LetterOfSupport","type":"UnifiedApp","metadata":{"displayName":"Letter Of Support"}}]</BillingContext>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="ESA - LoS - Completed" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{6dfcc0d5-121a-f011-998a-6045bde1a02e}" Name="Safe Copy of - ESA Letter of Support - Send for Signature">
+      <JsonFileName>/Workflows/SafeCopyof-ESALetterofSupport-SendforSignature-6DFCC0D5-121A-F011-998A-6045BDE1A02E.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>0</StateCode>
+      <StatusCode>1</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Safe Copy of - ESA Letter of Support - Send for Signature" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{8590e6e7-72fb-ef11-bae2-7c1e52216c84}" Name="Set User Type">
+      <JsonFileName>/Workflows/SetUserType-8590E6E7-72FB-EF11-BAE2-7C1E52216C84.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>0</StateCode>
+      <StatusCode>1</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.18</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <BillingContext>[{"id":"esamk_LetterOfSupport","type":"UnifiedApp","metadata":{"displayName":"Letter Of Support"}}]</BillingContext>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Set User Type" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{15f89532-2900-f011-bae3-7c1e52216c84}" Name="Specifiers">
+      <JsonFileName>/Workflows/Specifiers-15F89532-2900-F011-BAE3-7C1E52216C84.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>0</StateCode>
+      <StatusCode>1</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.20</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Specifiers" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{cc6b57d7-d008-f011-bae3-7c1e52350c34}" Name="Send Email to Specifiers">
+      <JsonFileName>/Workflows/SendEmailtoSpecifiers-CC6B57D7-D008-F011-BAE3-7C1E52350C34.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>0</StateCode>
+      <StatusCode>1</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.20</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <BillingContext>[{"id":"esamk_LetterOfSupport","type":"UnifiedApp","metadata":{"displayName":"Authorisation of Funding"}}]</BillingContext>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Send Email to Specifiers" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{50a6d660-fff8-ef11-bae2-7c1e52768cb0}" Name="Import Workplans">
+      <JsonFileName>/Workflows/ImportWorkplans-50A6D660-FFF8-EF11-BAE2-7C1E52768CB0.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.15</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <BillingContext>[{"id":"esamk_LetterOfSupport","type":"UnifiedApp","metadata":{"displayName":"Letter Of Support"}}]</BillingContext>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Import Workplans" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{58d2c5b1-69fb-ef11-bae2-7c1e52768cb0}" Name="Pull through Specifiers">
+      <JsonFileName>/Workflows/PullthroughSpecifiers-58D2C5B1-69FB-EF11-BAE2-7C1E52768CB0.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>0</StateCode>
+      <StatusCode>1</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.18</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <BillingContext>[{"id":"esamk_LetterOfSupport","type":"UnifiedApp","metadata":{"displayName":"Letter Of Support"}}]</BillingContext>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Pull through Specifiers" />
+      </LocalizedNames>
+    </Workflow>
+  </Workflows>
+  <FieldSecurityProfiles></FieldSecurityProfiles>
+  <Templates />
+  <EntityMaps />
+  <EntityRelationships />
+  <OrganizationSettings />
+  <optionsets />
+  <CustomControls />
+  <EntityDataProviders />
+  <connectionreferences>
+    <connectionreference connectionreferencelogicalname="esamk_sharedcommondataserviceforapps_56a48">
+      <connectionreferencedisplayname>DataverseConnection</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="esamk_sharedoffice365_f9e16">
+      <connectionreferencedisplayname>OutlookConnection</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_office365</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="esamk_sharedonedriveforbusiness_666e9">
+      <connectionreferencedisplayname>OneDriveConnection</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_onedriveforbusiness</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="esamk_sharedsharepointonline_ebfad">
+      <connectionreferencedisplayname>SharePointConnection</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_sharepointonline</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="new_shareddocusigndemo_30280">
+      <connectionreferencedisplayname>DocusignConnection</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_docusigndemo</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+  </connectionreferences>
+  <Languages>
+    <Language>1033</Language>
+  </Languages>
+</ImportExportXml>

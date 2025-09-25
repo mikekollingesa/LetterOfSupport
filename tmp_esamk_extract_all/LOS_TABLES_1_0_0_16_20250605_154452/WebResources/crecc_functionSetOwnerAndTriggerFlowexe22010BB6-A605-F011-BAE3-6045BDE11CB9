@@ -1,0 +1,31 @@
+function SetOwnerAndTriggerFlow(executionContext) {
+    var formContext = executionContext.getFormContext();
+    var globalContext = Xrm.Utility.getGlobalContext();
+    var userId = globalContext.userSettings.userId;
+
+    console.log("🔹 Checking if Owner needs to be set...");
+
+    if (!formContext.data.entity.getId()) {
+        console.log("🆕 New Record Detected. Setting Owner...");
+
+        var ownerReference = [{
+            id: userId,
+            entityType: "systemuser"
+        }];
+        formContext.getAttribute("ownerid").setValue(ownerReference);
+
+        console.log("✅ Owner Set to: " + userId);
+
+        // 🔹 Force Save after setting Owner
+        setTimeout(function () {
+            console.log("💾 Auto-Saving to Generate Record ID...");
+            formContext.data.entity.save();
+        }, 2000);
+    } else {
+        console.log("📝 Record already saved. Updating Hidden Field to Trigger Flow...");
+
+        // 🔥 Update a hidden field to trigger Power Automate
+        formContext.getAttribute("esamk_triggerflow").setValue(new Date().toISOString());
+        formContext.data.entity.save();
+    }
+}

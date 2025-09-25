@@ -1,0 +1,50 @@
+function UpdateOwnerAndBusinessUnit(executionContext) {
+    var formContext = executionContext.getFormContext();
+    var globalContext = Xrm.Utility.getGlobalContext();
+    var userId = globalContext.userSettings.userId;
+    
+    // Get the Record ID (only available after saving)
+    var entityId = formContext.data.entity.getId();
+    
+    if (!entityId) {
+        console.log("❌ No Entity ID available. Exiting update.");
+        return;
+    }
+
+    console.log("🔹 Updating Owner and Business Unit for Entity ID: " + entityId);
+
+    // Get User's Business Unit
+    Xrm.WebApi.retrieveRecord("systemuser", userId, "?$select=_businessunitid_value").then(
+        function(result) {
+            var businessUnitId = result["_businessunitid_value"];
+            console.log("✅ User Business Unit: " + businessUnitId);
+
+            // Assign Owner and Business Unit
+            var ownerReference = {
+                id: userId,
+                entityType: "systemuser"
+            };
+
+            Xrm.WebApi.updateRecord("esamk_letterofsupport1", entityId, {
+                "ownerid": ownerReference,
+                "businessunitid": {
+                    "id": businessUnitId,
+                    "entityType": "businessunit"
+                }
+            }).then(
+                function() {
+                    console.log("✅ Owner and Business Unit Updated Successfully!");
+
+                    // Refresh Form
+                    formContext.data.refresh(true);
+                },
+                function(error) {
+                    console.log("❌ Error updating Owner/Business Unit: " + error.message);
+                }
+            );
+        },
+        function(error) {
+            console.log("❌ Error retrieving User Business Unit: " + error.message);
+        }
+    );
+}

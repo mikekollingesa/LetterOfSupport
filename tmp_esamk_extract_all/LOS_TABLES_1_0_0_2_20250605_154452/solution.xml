@@ -1,0 +1,354 @@
+<ImportExportXml version="9.2.25031.216" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25031.216" OrganizationSchemaType="Full" CRMServerServiceabilityVersion="9.2.25031.00216">
+  <SolutionManifest>
+    <UniqueName>LOS_TABLES</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="LOS_TABLES" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions />
+    <Version>1.0.0.2</Version>
+    <Managed>0</Managed>
+    <Publisher>
+      <UniqueName>ESA</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="ESA" languagecode="1033" />
+      </LocalizedNames>
+      <Descriptions />
+      <EMailAddress xsi:nil="true"></EMailAddress>
+      <SupportingWebsiteUrl xsi:nil="true"></SupportingWebsiteUrl>
+      <CustomizationPrefix>esamk</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>30529</CustomizationOptionValuePrefix>
+      <Addresses>
+        <Address>
+          <AddressNumber>1</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+        <Address>
+          <AddressNumber>2</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+      </Addresses>
+    </Publisher>
+    <RootComponents>
+      <RootComponent type="1" schemaName="esamk_domainname" behavior="0" />
+      <RootComponent type="1" schemaName="esamk_domainowner" behavior="0" />
+      <RootComponent type="1" schemaName="esamk_letterofsupport1" behavior="0" />
+      <RootComponent type="1" schemaName="esamk_letterofsupportprocess" behavior="0" />
+      <RootComponent type="1" schemaName="esamk_lut_activity" behavior="0" />
+      <RootComponent type="1" schemaName="esamk_lut_directorgeneral" behavior="0" />
+      <RootComponent type="1" schemaName="esamk_lut_domain" behavior="0" />
+      <RootComponent type="1" schemaName="esamk_lut_programme" behavior="0" />
+      <RootComponent type="1" schemaName="esamk_lut_programme_component" behavior="0" />
+      <RootComponent type="1" schemaName="esamk_lut_programme_element" behavior="0" />
+      <RootComponent type="1" schemaName="esamk_memberstate" behavior="0" />
+      <RootComponent type="1" schemaName="esamk_subdomain" behavior="0" />
+      <RootComponent type="1" schemaName="esamk_workplans" behavior="0" />
+      <RootComponent type="1" schemaName="systemuser" behavior="1" />
+      <RootComponent type="20" id="{719f9990-42fb-ef11-bae2-6045bde11cb9}" behavior="0" />
+      <RootComponent type="20" id="{d4b10c62-42fb-ef11-bae2-7c1e52350c34}" behavior="0" />
+      <RootComponent type="29" id="{c06947bf-3ee9-ef11-9342-6045bd13613d}" behavior="0" />
+      <RootComponent type="60" id="{cc4ffcad-63da-ef11-8eea-000d3ab1b72b}" />
+      <RootComponent type="61" schemaName="crecc_functionSetOwnerAndTriggerFlowexe" behavior="0" />
+      <RootComponent type="61" schemaName="crecc_functionUpdateOwnerAndBusinessUnit" behavior="0" />
+      <RootComponent type="61" schemaName="crecc_getuser1" behavior="0" />
+      <RootComponent type="61" schemaName="crecc_hidebutton" behavior="0" />
+      <RootComponent type="61" schemaName="crecc_SetOwningBusinessUnit" behavior="0" />
+      <RootComponent type="61" schemaName="esamk_functionGetUserexecutionContext" behavior="0" />
+      <RootComponent type="61" schemaName="esamk_sendtodocusign" behavior="0" />
+      <RootComponent type="61" schemaName="esamk_sendtospecifier" behavior="0" />
+    </RootComponents>
+    <MissingDependencies>
+      <MissingDependency>
+        <Required type="1" schemaName="bookableresource" displayName="Bookable Resource" solution="msdynce_Scheduling (9.0.0.0)">
+          <package appName="Dynamics 365 For Scheduling" version="9.0.7.3">Scheduling_Anchor (9.0.7.3)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="cap_esacontactonboarding" displayName="esacontact Onboarding" solution="Active" />
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="msdyn_agentlanguage" displayName="Agent Language" solution="msdyn_AgentGroupManager (1.5.25024.1001)">
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="msdyn_agentregion" displayName="Agent Region" solution="msdyn_AgentGroupManager (1.5.25024.1001)">
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="msdyn_capacityprofile" displayName="Capacity Profile" solution="UnifiedRouting (1.5.25024.1001)">
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="10" schemaName="cap_cap_esacontactonboarding_systemuser" displayName="cap_cap_esacontactonboarding_systemuser" parentSchemaName="cap_esacontactonboarding" parentDisplayName="esacontact Onboarding" solution="Active" />
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="10" schemaName="msdyn_systemuser_msdyn_agentlanguage_systemuserid" displayName="msdyn_systemuser_msdyn_agentlanguage_systemuserid" parentSchemaName="msdyn_agentlanguage" parentDisplayName="Agent Language" solution="msdyn_AgentGroupManager (1.5.25024.1001)">
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="10" schemaName="msdyn_agentregion_systemuserid_systemuser" displayName="msdyn_agentregion_systemuserid_systemuser" parentSchemaName="msdyn_agentregion" parentDisplayName="Agent Region" solution="msdyn_AgentGroupManager (1.5.25024.1001)">
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="10" schemaName="msdyn_msdyn_presence_systemuser" displayName="msdyn_msdyn_presence_systemuser" parentSchemaName="systemuser" parentDisplayName="User" solution="OmnichannelBase (1.10.0.84)">
+          <package appName="CXP" version="1.1.53893.144">DynamicsMKT_AnchorSolution (1.1.53893.144)</package>
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="cap_directoratelist" displayName="Directorate List" parentSchemaName="systemuser" parentDisplayName="User" solution="Active" />
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="cap_marketingemailfromaddress" displayName="Marketing Email From Address" parentSchemaName="systemuser" parentDisplayName="User" solution="Active" />
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="cap_marketingemailfromname" displayName="Marketing Email From Name" parentSchemaName="systemuser" parentDisplayName="User" solution="Active" />
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="cap_teamlist" displayName="Team List" parentSchemaName="systemuser" parentDisplayName="User" solution="Active" />
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="esamk_usertype" displayName="User Type" parentSchemaName="systemuser" parentDisplayName="User" solution="Active" />
+        <Dependent type="60" displayName="Information" parentDisplayName="User" id="{c0d7d7dd-afd0-4675-85fe-1cc5a48be6df}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="esamk_usertype" displayName="User Type" parentSchemaName="systemuser" parentDisplayName="User" solution="Active" />
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="msdyn_agentType" displayName="User type" parentSchemaName="systemuser" parentDisplayName="User" solution="OmnichannelBotEnabler (1.5.0.4)">
+          <package appName="Omnichannel for Customer Service - Base" version="1.5.26.324">OmnichannelPrimeAnchor (1.5.26.324)</package>
+          <package appName="OmnichannelPrime" version="1.10.0.27">msdyn_ContactCenterEnablement (1.10.0.27)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="msdyn_botapplicationid" displayName="Bot application ID" parentSchemaName="systemuser" parentDisplayName="User" solution="OmnichannelBotEnabler (1.5.0.4)">
+          <package appName="Omnichannel for Customer Service - Base" version="1.5.26.324">OmnichannelPrimeAnchor (1.5.26.324)</package>
+          <package appName="OmnichannelPrime" version="1.10.0.27">msdyn_ContactCenterEnablement (1.10.0.27)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="msdyn_botdescription" displayName="Description" parentSchemaName="systemuser" parentDisplayName="User" solution="OmnichannelBase (1.10.0.84)">
+          <package appName="CXP" version="1.1.53893.144">DynamicsMKT_AnchorSolution (1.1.53893.144)</package>
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="msdyn_botprovider" displayName="Bot Provider" parentSchemaName="systemuser" parentDisplayName="User" solution="msdyn_OmnichannelBotEnablerPatch (1.5.26.15)">
+          <package appName="Omnichannel for Customer Service - Base" version="1.5.26.324">OmnichannelPrimeAnchor (1.5.26.324)</package>
+          <package appName="OmnichannelPrime" version="1.10.0.27">msdyn_ContactCenterEnablement (1.10.0.27)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="msdyn_capacity" displayName="Capacity" parentSchemaName="systemuser" parentDisplayName="User" solution="OmnichannelBase (1.10.0.84)">
+          <package appName="CXP" version="1.1.53893.144">DynamicsMKT_AnchorSolution (1.1.53893.144)</package>
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="msdyn_defaultpresenceiduser" displayName="Default Presence" parentSchemaName="systemuser" parentDisplayName="User" solution="OmnichannelBase (1.10.0.84)">
+          <package appName="CXP" version="1.1.53893.144">DynamicsMKT_AnchorSolution (1.1.53893.144)</package>
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="siteid" displayName="Site" parentSchemaName="systemuser" parentDisplayName="User" solution="msdynce_Service (9.0.5.56)">
+          <package appName="msdynce_Service" version="9.0.25023.1002">msdynce_ServiceAnchor (9.0.25023.1002)</package>
+        </Required>
+        <Dependent type="60" displayName="Information" parentDisplayName="User" id="{c0d7d7dd-afd0-4675-85fe-1cc5a48be6df}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="siteid" displayName="Site" parentSchemaName="systemuser" parentDisplayName="User" solution="msdynce_Service (9.0.5.56)">
+          <package appName="msdynce_Service" version="9.0.25023.1002">msdynce_ServiceAnchor (9.0.25023.1002)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="territoryid" displayName="Territory" parentSchemaName="systemuser" parentDisplayName="User" solution="msdynce_AppCommon (9.0.4.0066)">
+          <package appName="msdynce_AppCommon" version="9.0.25024.10001">msdynce_AppCommonAnchor (9.0.25024.10001)</package>
+        </Required>
+        <Dependent type="60" displayName="Information" parentDisplayName="User" id="{c0d7d7dd-afd0-4675-85fe-1cc5a48be6df}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="territoryid" displayName="Territory" parentSchemaName="systemuser" parentDisplayName="User" solution="msdynce_AppCommon (9.0.4.0066)">
+          <package appName="msdynce_AppCommon" version="9.0.25024.10001">msdynce_AppCommonAnchor (9.0.25024.10001)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="User Region Subgrid Related View" displayName="User Region Subgrid Related View" parentSchemaName="msdyn_agentregion" parentDisplayName="Agent Region" solution="msdyn_AgentGroupManager (1.5.25024.1001)" id="{3ee1c3eb-cfb2-ef11-a72c-0022480aed32}">
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="Omnichannel queues" displayName="Omnichannel queues" parentSchemaName="queue" parentDisplayName="Queue" solution="OmnichannelBase (1.10.0.84)" id="{475ba760-c16c-e911-8196-000d3af7379e}">
+          <package appName="CXP" version="1.1.53893.144">DynamicsMKT_AnchorSolution (1.1.53893.144)</package>
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="Active Capacity Profiles" displayName="Active Capacity Profiles" parentSchemaName="msdyn_capacityprofile" parentDisplayName="Capacity Profile" solution="UnifiedRouting (1.5.25024.1001)" id="{59137c65-5747-433b-8a7d-fd1dc252f13f}">
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="Capacity profile Subgrid View" displayName="Capacity profile Subgrid View" parentSchemaName="msdyn_capacityprofile" parentDisplayName="Capacity Profile" solution="OCBaseURBase (1.5.25024.1001)" id="{6313eed9-e160-eb11-a812-000d3a9bbc54}">
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="Active Bookable Resources" displayName="Active Bookable Resources" parentSchemaName="bookableresource" parentDisplayName="Bookable Resource" solution="msdynce_Scheduling (9.0.0.0)" id="{662706ca-6ec0-4c0e-a281-521161be48fa}">
+          <package appName="Dynamics 365 For Scheduling" version="9.0.7.3">Scheduling_Anchor (9.0.7.3)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="Active esacontact Onboarding" displayName="Active esacontact Onboarding" parentSchemaName="cap_esacontactonboarding" parentDisplayName="esacontact Onboarding" solution="Active" id="{d396bfff-8cec-4023-9fce-320afbe4a343}" />
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="User Language Subgrid Related View" displayName="User Language Subgrid Related View" parentSchemaName="msdyn_agentlanguage" parentDisplayName="Agent Language" solution="msdyn_AgentGroupManager (1.5.25024.1001)" id="{e5f86c17-f1ab-ef11-a72c-0022480aed32}">
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="msdyn_/ActivityFeeds.Form.js" displayName="msdyn_/ActivityFeeds.Form.js" solution="ActivityFeedsCore (9.0.0.0011)">
+          <package appName="ActivityFeedsCore" version="9.0.0.0011">ActivityFeedsCore (9.0.0.0011)</package>
+        </Required>
+        <Dependent type="60" displayName="Information" parentDisplayName="User" id="{c0d7d7dd-afd0-4675-85fe-1cc5a48be6df}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="msdyn_/RecordWall.htm" displayName="msdyn_/RecordWall.htm" solution="ActivityFeedsCore (9.0.0.0011)">
+          <package appName="ActivityFeedsCore" version="9.0.0.0011">ActivityFeedsCore (9.0.0.0011)</package>
+        </Required>
+        <Dependent type="60" displayName="Information" parentDisplayName="User" id="{c0d7d7dd-afd0-4675-85fe-1cc5a48be6df}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="msdyn_agentAttributesSubgridActions.js" displayName="msdyn_agentAttributesSubgridActions.js" solution="msdyn_AgentGroupManager (1.5.25024.1001)">
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="msdyn_capacityprofileSubgridActions.js" displayName="msdyn_capacityprofileSubgridActions.js" solution="OCBaseURBase (1.5.25024.1001)">
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="msdyn_OmnichannelBotEnabler/msdyn_BotUser.js" displayName="msdyn_OmnichannelBotEnabler/msdyn_BotUser.js" solution="msdyn_OmnichannelBotEnablerPatch (1.5.26.15)">
+          <package appName="Omnichannel for Customer Service - Base" version="1.5.26.324">OmnichannelPrimeAnchor (1.5.26.324)</package>
+          <package appName="OmnichannelPrime" version="1.10.0.27">msdyn_ContactCenterEnablement (1.10.0.27)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="msdyn_userSettings.js" displayName="msdyn_userSettings.js" solution="OmnichannelBase (1.10.0.84)">
+          <package appName="CXP" version="1.1.53893.144">DynamicsMKT_AnchorSolution (1.1.53893.144)</package>
+          <package appName="UnifiedRoutingPrime" version="1.5.26.177">UnifiedRoutingPrimeAnchor (1.5.26.177)</package>
+        </Required>
+        <Dependent type="60" displayName="User" parentDisplayName="User" id="{c2cd9e55-d4b4-4b55-9951-16ead79643e5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="MscrmControls.FieldControls.CheckboxControl" displayName="MscrmControls.FieldControls.CheckboxControl" solution="BaseCustomControlsCore (9.0.2503.1001)">
+          <package appName="Base Custom Controls" version="9.0.2503.1001">BaseCustomControlsCore (9.0.2503.1001)</package>
+        </Required>
+        <Dependent type="60" displayName="New Main Form" parentDisplayName="AuthorisationOfFunding" id="{2bb3b08d-f9f8-ef11-bae2-002248a05bc5}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="MscrmControls.FieldControls.CheckboxControl" displayName="MscrmControls.FieldControls.CheckboxControl" solution="BaseCustomControlsCore (9.0.2503.1001)">
+          <package appName="Base Custom Controls" version="9.0.2503.1001">BaseCustomControlsCore (9.0.2503.1001)</package>
+        </Required>
+        <Dependent type="60" displayName="Information - Main" parentDisplayName="AuthorisationOfFunding" id="{d9771fee-d374-417c-993d-caf8382acd16}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="MscrmControls.Grid.GridControl" displayName="MscrmControls.Grid.GridControl" solution="BaseCustomControlsCore (9.0.2503.1001)">
+          <package appName="Base Custom Controls" version="9.0.2503.1001">BaseCustomControlsCore (9.0.2503.1001)</package>
+        </Required>
+        <Dependent type="60" displayName="Information" parentDisplayName="lut_domain" id="{429cd389-38e8-49d9-afbc-13cee9783fc7}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="MscrmControls.Grid.GridControl" displayName="MscrmControls.Grid.GridControl" solution="BaseCustomControlsCore (9.0.2503.1001)">
+          <package appName="Base Custom Controls" version="9.0.2503.1001">BaseCustomControlsCore (9.0.2503.1001)</package>
+        </Required>
+        <Dependent type="60" displayName="Information" parentDisplayName="lut_activity" id="{775b4081-2931-41b6-8c12-a064b4682789}" />
+      </MissingDependency>
+    </MissingDependencies>
+  </SolutionManifest>
+</ImportExportXml>

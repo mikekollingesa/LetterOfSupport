@@ -1,0 +1,90 @@
+function updateAndNotify(primaryControl) {
+    console.log("🟢 Function 'updateAndNotify' triggered");
+
+    try {
+        if (!primaryControl) {
+            console.error("❌ No primaryControl passed to function");
+            alert("Primary Control not available. Please check Ribbon setup.");
+            return;
+        }
+
+        const entityId = primaryControl.data?.entity?.getId()?.replace(/[{}]/g, "");
+        const entityName = primaryControl.data?.entity?.getEntityName();
+        console.log("📄 Entity Name:", entityName);
+        console.log("🆔 Entity ID:", entityId);
+
+        if (!entityId || !entityName) {
+            throw new Error("Could not retrieve entity info. Ensure the record is saved.");
+        }
+
+        const fundingAmount = primaryControl.getAttribute("esamk_authorisedfunding")?.getValue();
+        const respondByDate = primaryControl.getAttribute("esamk_dateallsignaturesrequiredby")?.getValue();
+
+        console.log("💰 Funding Amount:", fundingAmount); // Make sure this logs
+        console.log("📅 Respond By Date:", respondByDate); // Make sure this logs
+
+        if (fundingAmount === 0) {
+            alert("Funding amount cannot be zero");
+            return;
+        }
+
+        if (!respondByDate) {
+            alert("Respond by date is required");
+            return;
+        }
+
+        const updateData = {
+            esamk_submit: "SendNow"
+        };
+
+        console.log("📦 Update Payload:", updateData); // Make sure this logs
+        disableRibbonButton(primaryControl);
+
+        Xrm.WebApi.updateRecord(entityName, entityId, updateData).then(
+            function success(result) {
+                console.log("✅ Record updated successfully:", result);
+                alert("Submit In Progress");
+                setTimeout(() => {
+                    console.log("🔄 Refreshing form...");
+                    primaryControl.data.refresh();
+                }, 1000);
+            },
+            function (error) {
+                console.error("❌ Web API error:", error.message);
+                alert("Error: " + error.message);
+            }
+        );
+    } catch (error) {
+        console.error("❗ Try/Catch Error:", error.message);
+        alert("Error: " + error.message);
+    }
+}
+
+
+
+function isNotSubmitted(primaryControl) {
+    try {
+        console.log("🚦 Enable Rule: isNotSubmitted triggered");
+
+        if (!primaryControl) {
+            console.warn("⚠️ primaryControl not provided");
+            return true; // Fail-safe: assume not submitted, keep button enabled
+        }
+
+        const attr = primaryControl.getAttribute("esamk_submit");
+        if (!attr) {
+            console.log("ℹ️ Field 'esamk_submit' not found on form. Assuming not submitted.");
+            return true;
+        }
+
+        const value = attr.getValue();
+        console.log("📄 esamk_submit value:", value);
+
+        // Button is enabled (not submitted) if value is not one of these
+        return value !== "SendToSpecifier" && value !== "Sent" && value !== "SentToSpecifier" && value !== "SendNow";
+    } catch (e) {
+        console.error("❌ Enable Rule Error:", e.message);
+        return true; // Fail-safe: keep button enabled
+    }
+}
+

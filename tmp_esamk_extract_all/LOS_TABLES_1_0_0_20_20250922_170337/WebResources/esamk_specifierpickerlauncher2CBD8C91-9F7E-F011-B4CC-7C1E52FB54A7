@@ -1,0 +1,49 @@
+var ESAMK = window.ESAMK || {};
+(function () {
+  ESAMK.openSpecifierPicker = function (primaryControl) {
+    var formContext = primaryControl;
+    var id = formContext.data.entity.getId();
+    if (!id) {
+      Xrm.Navigation.openAlertDialog({ text: "Please save the record before adding specifiers." });
+      return;
+    }
+
+    var memberAttr = formContext.getAttribute("esamk_memberstate");
+    var msVal = memberAttr && memberAttr.getValue && memberAttr.getValue();
+    if (!msVal || !msVal.length) {
+      Xrm.Navigation.openAlertDialog({ text: "Please select a Member State first." });
+      return;
+    }
+
+    var projectId = id.replace(/[{}]/g, "");
+    var countryId = msVal[0].id.replace(/[{}]/g, "");
+
+    var dataAsString = JSON.stringify({ projectid: projectId, countryid: countryId });
+
+    var pageInput = {
+      pageType: "custom",
+      name: "esamk_canvas1_671d2",          
+      entityName: "authorisationoffundings", 
+      recordId: dataAsString                 
+    };
+
+    var navOptions = {
+      target: 2,              
+      position: 1,            
+      title: "Add Specifiers by Country",
+      width: 800,             
+      height: 500             
+    };
+
+    Xrm.Navigation.navigateTo(pageInput, navOptions).then(function () {
+      
+      // 👇 THIS IS THE ONLY LINE YOU NEED TO CHANGE.
+      // This command refreshes the form's primary data source, which in turn
+      // triggers the OnDataRefresh event for the embedded canvas app.
+      formContext.data.refresh(true);
+
+    }, function (err) {
+      console.warn("Specifier picker closed/cancelled:", err && err.message);
+    });
+  };
+})();

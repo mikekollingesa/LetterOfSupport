@@ -1,0 +1,32 @@
+<appaction uniquename="esamk__SubmitDocusign!cddbd11b58a946ac8cf35b847a10d70e!msdynce_saleshub!esamk_letterofsupport1!0">
+  <appmoduleid>
+    <uniquename>msdynce_saleshub</uniquename>
+  </appmoduleid>
+  <buttonlabeltext default="SubmitDocusign">
+    <label description="SubmitDocusign" languagecode="1033" />
+  </buttonlabeltext>
+  <context>1</context>
+  <contextentity>
+    <logicalname>esamk_letterofsupport1</logicalname>
+  </contextentity>
+  <contextvalue>esamk_letterofsupport1</contextvalue>
+  <fonticon>$clientsvg:Accept</fonticon>
+  <hidden>0</hidden>
+  <iscustomizable>1</iscustomizable>
+  <isdisabled>0</isdisabled>
+  <isgrouptitlehidden>0</isgrouptitlehidden>
+  <location>0</location>
+  <name>SubmitDocusign!cddbd11b58a946ac8cf35b847a10d70e</name>
+  <onclickeventformulacomponentlibraryid>
+    <name>esamk_saleshubdefaultcommandlibrary_42bbd</name>
+  </onclickeventformulacomponentlibraryid>
+  <onclickeventformulacomponentname>1078c0abeac848bcbff5f5e998b347a8</onclickeventformulacomponentname>
+  <onclickeventformulafunctionname>OnSelect</onclickeventformulafunctionname>
+  <onclickeventtype>1</onclickeventtype>
+  <origin>0</origin>
+  <sequence>100100046.0000000000</sequence>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+  <type>0</type>
+  <visibilitytype>0</visibilitytype>
+</appaction>

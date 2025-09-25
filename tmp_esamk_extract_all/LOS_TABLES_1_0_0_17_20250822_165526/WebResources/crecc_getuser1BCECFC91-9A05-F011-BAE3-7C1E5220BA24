@@ -1,0 +1,111 @@
+/**
+ * Filters a subgrid's "Add Existing" lookup based on the Member State field.
+ * Form Configuration:
+ * 1. Add this script as a web resource to your D365 solution.
+ * 2. On your main form (e.g., Project), open the Form Properties.
+ * 3. In the Form Libraries, add this web resource.
+ * 4. In the Event Handlers, configure the following:
+ *    - Control: Form, Event: OnLoad -> Call SpecifierFilter.onFormLoad, pass execution context.
+ *    - Control: Member State (your lookup field), Event: OnChange -> Call SpecifierFilter.onMemberStateChange, pass execution context.
+ */
+
+var SpecifierFilter = SpecifierFilter || {};
+
+(function () {
+    "use strict";
+
+    // The logical name of your Member State lookup field on the main form.
+    const MEMBER_STATE_FIELD = "esamk_memberstate";
+
+    // The name of your Specifiers subgrid on the form.
+    // IMPORTANT: You can find this name in the form editor by selecting the subgrid and looking at its properties.
+    const SPECIFIERS_SUBGRID_NAME = "SpecifiersGrid"; // <-- *** CHANGE THIS TO YOUR GRID'S NAME ***
+
+    /**
+     * Handles the form's OnLoad event.
+     * @param {object} executionContext The execution context from the form event.
+     */
+    this.onFormLoad = function (executionContext) {
+        const formContext = executionContext.getFormContext();
+        console.log("SpecifierFilter: Form loaded. Applying filter.");
+        applyFilter(formContext);
+    };
+
+    /**
+     * Handles the OnChange event of the Member State lookup field.
+     * @param {object} executionContext The execution context from the form event.
+     */
+    this.onMemberStateChange = function (executionContext) {
+        const formContext = executionContext.getFormContext();
+        console.log("SpecifierFilter: Member state changed. Applying filter.");
+        applyFilter(formContext);
+    };
+
+    /**
+     * Main function to add the PreSearch filter to the subgrid control.
+     * @param {object} formContext The form context.
+     */
+    const applyFilter = function (formContext) {
+        try {
+            // Get the subgrid control by its name.
+            const specifiersGrid = formContext.getControl(SPECIFIERS_SUBGRID_NAME);
+
+            if (!specifiersGrid) {
+                console.error(`SpecifierFilter: Subgrid with name "${SPECIFIERS_SUBGRID_NAME}" not found. Please check the name in the form editor.`);
+                return;
+            }
+
+            // Add the PreSearch event handler to the subgrid.
+            // This function will fire every time the user clicks "Add Existing".
+            specifiersGrid.addPreSearch(filterSpecifierLookup);
+
+        } catch (error) {
+            console.error("SpecifierFilter.applyFilter error:", error);
+        }
+    };
+
+    /**
+     * This function is called by the PreSearch event. It builds and applies the FetchXML filter.
+     * @param {object} executionContext The execution context from the PreSearch event.
+     */
+    const filterSpecifierLookup = function (executionContext) {
+        const formContext = executionContext.getFormContext(); // Although this is available, it's better to get a fresh instance inside the handler.
+
+        try {
+            const memberStateAttr = formContext.getAttribute(MEMBER_STATE_FIELD);
+            if (!memberStateAttr) {
+                console.log("SpecifierFilter: Member State field not found on the form.");
+                return;
+            }
+
+            const memberStateValue = memberStateAttr.getValue();
+
+            // If no Member State is selected, do not apply any filter.
+            if (!memberStateValue || memberStateValue.length === 0) {
+                console.log("SpecifierFilter: No Member State selected, no filter applied.");
+                return;
+            }
+
+            const memberStateId = memberStateValue[0].id.replace(/[{}]/g, "");
+
+            // Construct the FetchXML filter.
+            // This filters the specifiers to only show those related to the selected Member State.
+            const filterXml =
+                "<filter type='and'>" +
+                "<condition attribute='esamk_memberstate' operator='eq' uitype='esamk_memberstate' value='" + memberStateId + "' />" +
+                "</filter>";
+
+            console.log("SpecifierFilter: Applying filter to subgrid lookup:", filterXml);
+
+            // Get the subgrid control again and apply the custom filter.
+            const specifiersGrid = formContext.getControl(SPECIFIERS_SUBGRID_NAME);
+            if(specifiersGrid) {
+                specifiersGrid.addCustomFilter(filterXml);
+            }
+
+        } catch (error) {
+            console.error("SpecifierFilter.filterSpecifierLookup error:", error);
+        }
+    };
+
+}).call(SpecifierFilter);

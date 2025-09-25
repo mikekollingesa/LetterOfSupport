@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Entities />
+  <Roles />
+  <Workflows />
+  <FieldSecurityProfiles />
+  <Templates />
+  <EntityMaps />
+  <EntityRelationships />
+  <OrganizationSettings />
+  <optionsets />
+  <WebResources>
+    <WebResource>
+      <WebResourceId>{5cd733cc-13a2-e311-87bf-18a905f32500}</WebResourceId>
+      <Name>mspfedyn_/orgdborgsettings/jquery1_11_0.js</Name>
+      <DisplayName>jquery1_11_0.js</DisplayName>
+      <Description>jQuery 1.11.0 minified</Description>
+      <WebResourceType>3</WebResourceType>
+      <IntroducedVersion>1.0.1.23</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <CanBeDeleted>1</CanBeDeleted>
+      <IsHidden>0</IsHidden>
+      <FileName>/WebResources/mspfedyn_orgdborgsettingsjquery1_11_0js5CD733CC-13A2-E311-87BF-18A905F32500</FileName>
+    </WebResource>
+    <WebResource>
+      <WebResourceId>{cfefa780-e9c2-e211-97c8-18a905f32500}</WebResourceId>
+      <Name>mspfedyn_/orgdborgsettings/json2.js</Name>
+      <DisplayName>json2.js</DisplayName>
+      <Description>JSON2.js (http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.min.js)</Description>
+      <WebResourceType>3</WebResourceType>
+      <IntroducedVersion>1.0.1.23</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <CanBeDeleted>1</CanBeDeleted>
+      <IsHidden>0</IsHidden>
+      <FileName>/WebResources/mspfedyn_orgdborgsettingsjson2jsCFEFA780-E9C2-E211-97C8-18A905F32500</FileName>
+    </WebResource>
+    <WebResource>
+      <WebResourceId>{3f22606c-e9c2-e211-97c8-18a905f32500}</WebResourceId>
+      <Name>mspfedyn_/orgdborgsettings/orgdborgsettings.html</Name>
+      <DisplayName>orgdborgsettings.html</DisplayName>
+      <Description>This is the main page of the orgdbsettings utility.  </Description>
+      <WebResourceType>1</WebResourceType>
+      <IntroducedVersion>1.0.1.23</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <CanBeDeleted>1</CanBeDeleted>
+      <IsHidden>0</IsHidden>
+      <FileName>/WebResources/mspfedyn_orgdborgsettingsorgdborgsettingshtml3F22606C-E9C2-E211-97C8-18A905F32500</FileName>
+    </WebResource>
+    <WebResource>
+      <WebResourceId>{e01ff374-7ac4-e211-97c8-18a905f32500}</WebResourceId>
+      <Name>mspfedyn_/orgdborgsettings/progress.gif</Name>
+      <DisplayName>progress.gif</DisplayName>
+      <Description>Progress gif</Description>
+      <WebResourceType>7</WebResourceType>
+      <IntroducedVersion>1.0.1.23</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <CanBeDeleted>1</CanBeDeleted>
+      <IsHidden>0</IsHidden>
+      <FileName>/WebResources/mspfedyn_orgdborgsettingsprogressgifE01FF374-7AC4-E211-97C8-18A905F32500</FileName>
+    </WebResource>
+    <WebResource>
+      <WebResourceId>{1f7b9b61-e9c2-e211-97c8-18a905f32500}</WebResourceId>
+      <Name>mspfedyn_/orgdborgsettings/settings.xml</Name>
+      <DisplayName>settings.xml</DisplayName>
+      <Description>Contains the orgdborgsettings documented in KB 2691237</Description>
+      <WebResourceType>4</WebResourceType>
+      <IntroducedVersion>1.0.1.23</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <CanBeDeleted>1</CanBeDeleted>
+      <IsHidden>0</IsHidden>
+      <FileName>/WebResources/mspfedyn_orgdborgsettingssettingsxml1F7B9B61-E9C2-E211-97C8-18A905F32500</FileName>
+    </WebResource>
+  </WebResources>
+  <Languages>
+    <Language>1033</Language>
+  </Languages>
+</ImportExportXml>

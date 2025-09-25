@@ -1,0 +1,1114 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "esamk_sharedcommondataserviceforapps_56a48"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "splitOn": "@triggerBody()['rows']",
+          "metadata": {
+            "operationMetadataId": "e1d51942-2d28-4801-8b45-63c19ab492a6"
+          },
+          "type": "Request",
+          "kind": "ApiConnection",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "host": {
+              "connection": {
+                "name": "@parameters('$connections')['shared_commondataserviceforapps']['connectionId']"
+              }
+            },
+            "operationId": "RecordSelected",
+            "parameters": {
+              "entityName": "esamk_workplanses"
+            }
+          }
+        }
+      },
+      "actions": {
+        "List_rows_in_Activity_Record_Source": {
+          "runAfter": {
+            "Initialize_Activity_variable": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b013755e-c027-4a9e-ad89-2463f41d5da1"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "esamk_workplanses",
+              "fetchXml": "<fetch >\n  <entity name=\"esamk_workplans\">\n    <filter>\n      <condition attribute=\"owningbusinessunit\" operator=\"eq\" value=\"@{variables('BusinessUnit')}\" />\n    </filter>\n  </entity>\n</fetch>"
+            },
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+            }
+          }
+        },
+        "Apply_to_each_Source_Record": {
+          "foreach": "@outputs('List_rows_in_Activity_Record_Source')?['body/value']",
+          "actions": {
+            "List_Domain_Rows_Found": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "fcbb095c-5834-47a8-b8fd-4e591ac2fdf1"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "ListRecords",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_lut_domains",
+                  "$filter": "esamk_name eq  '@{items('Apply_to_each_Source_Record')?['esamk_domain']}'",
+                  "$top": 1
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "If_Domains_Found": {
+              "foreach": "@outputs('List_Domain_Rows_Found')?['body/value']",
+              "actions": {
+                "Update_Domain": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "fe987df2-fb5a-4bad-a182-aeaec2f60fc4"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateOnlyRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "esamk_lut_domains",
+                      "recordId": "@items('If_Domains_Found')?['esamk_lut_domainid']",
+                      "item/esamk_name": "@items('Apply_to_each_Source_Record')?['esamk_domain']",
+                      "item/owningbusinessunit@odata.bind": "businessunits(@{variables('BusinessUnit')})"
+                    },
+                    "authentication": {
+                      "type": "Raw",
+                      "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                    }
+                  }
+                },
+                "Set_variable_Domain": {
+                  "runAfter": {
+                    "Update_Domain": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "b9a28f6f-8391-4a63-bf07-28c40bac31cf"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "DomainID",
+                    "value": "@outputs('Update_Domain')?['body/esamk_lut_domainid']"
+                  }
+                }
+              },
+              "runAfter": {
+                "List_Domain_Rows_Found": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "c5c26b7c-65d1-425d-bad6-d78975a09da3"
+              },
+              "type": "Foreach"
+            },
+            "Check_if_Domain_Found_if_not_Create_One": {
+              "actions": {},
+              "runAfter": {
+                "If_Domains_Found": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Create_Domain": {
+                    "runAfter": {},
+                    "metadata": {
+                      "operationMetadataId": "0f650647-a8dc-4312-8cd7-b78dbff98cb9"
+                    },
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "host": {
+                        "connectionName": "shared_commondataserviceforapps",
+                        "operationId": "CreateRecord",
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                      },
+                      "parameters": {
+                        "entityName": "esamk_lut_domains",
+                        "item/esamk_name": "@items('Apply_to_each_Source_Record')?['esamk_domain']",
+                        "item/owningbusinessunit@odata.bind": "businessunits(@{variables('BusinessUnit')})"
+                      },
+                      "authentication": {
+                        "type": "Raw",
+                        "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                      }
+                    }
+                  },
+                  "Set_variable_Domain_2": {
+                    "runAfter": {
+                      "Create_Domain": [
+                        "Succeeded"
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "3bba0999-d4c8-4660-8894-32ac8315daf3"
+                    },
+                    "type": "SetVariable",
+                    "inputs": {
+                      "name": "DomainID",
+                      "value": "@outputs('Create_Domain')?['body/esamk_lut_domainid']"
+                    }
+                  }
+                }
+              },
+              "expression": {
+                "greater": [
+                  "@length(outputs('List_Domain_Rows_Found')?['body/value'])",
+                  0
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "201fa1b6-467e-4732-881d-d265f384930a"
+              },
+              "type": "If"
+            },
+            "List_Programme_rows": {
+              "runAfter": {
+                "Add_Link_to_Domain": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "d0bfad2f-20b2-43bf-bfb1-4987bb025ab5"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "ListRecords",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_lut_programmes",
+                  "$select": "esamk_lut_programmeid",
+                  "fetchXml": "<fetch top=\"50\">\n  <entity name=\"esamk_lut_programme\">\n    <filter>\n      <condition attribute=\"esamk_name\" operator=\"eq\" value=\"@{items('Apply_to_each_Source_Record')?['esamk_programme']}\" />\n      <condition attribute=\"esamk_lut_domain\" operator=\"eq\" value=\"@{variables('DomainID')}\" />\n    </filter>\n  </entity>\n</fetch>",
+                  "$top": 1
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "Apply_to_each_Programme_Found": {
+              "foreach": "@outputs('List_Programme_rows')?['body/value']",
+              "actions": {
+                "Update_a_row": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "ce00dbe9-a62a-4850-9ecb-9dba98a89cc2"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateOnlyRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "esamk_lut_programmes",
+                      "recordId": "@items('Apply_to_each_Programme_Found')?['esamk_lut_programmeid']",
+                      "item/esamk_name": "@items('Apply_to_each_Source_Record')?['esamk_programme']",
+                      "item/esamk_contact1": "@items('Apply_to_each_Source_Record')?['esamk_contact1']",
+                      "item/esamk_contact2": "@items('Apply_to_each_Source_Record')?['esamk_contact2']",
+                      "item/owningbusinessunit@odata.bind": "businessunits(@{variables('BusinessUnit')})"
+                    },
+                    "authentication": {
+                      "type": "Raw",
+                      "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                    }
+                  }
+                },
+                "Set_variable": {
+                  "runAfter": {
+                    "Update_a_row": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "371c4aca-29b6-43b6-b641-339dff12417f"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "Programme",
+                    "value": "@outputs('Update_a_row')?['body/esamk_lut_programmeid']"
+                  }
+                }
+              },
+              "runAfter": {
+                "List_Programme_rows": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "e243b934-322e-4692-ae8e-27cb60097eda"
+              },
+              "type": "Foreach"
+            },
+            "Check_if_Programme_Found_if_Not_Create_One": {
+              "actions": {},
+              "runAfter": {
+                "Apply_to_each_Programme_Found": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Create_Programme": {
+                    "runAfter": {},
+                    "metadata": {
+                      "operationMetadataId": "213fc34a-e819-456b-9eaf-a2726fe3a998"
+                    },
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "host": {
+                        "connectionName": "shared_commondataserviceforapps",
+                        "operationId": "CreateRecord",
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                      },
+                      "parameters": {
+                        "entityName": "esamk_lut_programmes",
+                        "item/esamk_name": "@items('Apply_to_each_Source_Record')?['esamk_programme']",
+                        "item/esamk_contact1": "@items('Apply_to_each_Source_Record')?['esamk_contact1']",
+                        "item/esamk_contact2": "@items('Apply_to_each_Source_Record')?['esamk_contact2']",
+                        "item/esamk_lut_domain@odata.bind": "esamk_lut_domains(@{variables('DomainID')})",
+                        "item/owningbusinessunit@odata.bind": "businessunits(@{variables('BusinessUnit')})"
+                      },
+                      "authentication": {
+                        "type": "Raw",
+                        "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                      }
+                    }
+                  },
+                  "Set_Programme_Variable_2": {
+                    "runAfter": {
+                      "Create_Programme": [
+                        "Succeeded"
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "6614d4e9-62e3-4bd0-9a04-59fcd8368fd0"
+                    },
+                    "type": "SetVariable",
+                    "inputs": {
+                      "name": "Programme",
+                      "value": "@outputs('Create_Programme')?['body/esamk_lut_programmeid']"
+                    }
+                  }
+                }
+              },
+              "expression": {
+                "greater": [
+                  "@length(outputs('List_Programme_rows')?['body/value'])",
+                  0
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "23d3ac90-d18b-4b7b-a8c9-eb43b1bfa11a"
+              },
+              "type": "If"
+            },
+            "List_Programme_Element_rows": {
+              "runAfter": {
+                "Add_Link_to_Programme": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "e816d2ab-8c18-486d-886a-d117225200c3"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "ListRecords",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_lut_programme_elements",
+                  "fetchXml": "<fetch top=\"50\">\n  <entity name=\"esamk_lut_programme_element\">\n    <filter>\n      <condition attribute=\"esamk_name\" operator=\"eq\" value=\"@{items('Apply_to_each_Source_Record')?['esamk_programmeelement']}\" />\n      <condition attribute=\"esamk_lut_programme\" operator=\"eq\" value=\"@{variables('Programme')}\" />\n    </filter>\n  </entity>\n</fetch>",
+                  "$top": 1
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "Apply_to_each_Found_Programme_Element": {
+              "foreach": "@outputs('List_Programme_Element_rows')?['body/value']",
+              "actions": {
+                "Update_a_Programme_Element": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "55cf6ab1-74b5-4ff9-894d-f5f6d9ea8397"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateOnlyRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "esamk_lut_programme_elements",
+                      "recordId": "@items('Apply_to_each_Found_Programme_Element')?['esamk_lut_programme_elementid']",
+                      "item/esamk_name": "@items('Apply_to_each_Source_Record')?['esamk_programmeelement']",
+                      "item/esamk_decimalassociatedcostspercentage": "@items('Apply_to_each_Source_Record')?['esamk_decimalassociatedcostspercentage']",
+                      "item/esamk_legal": "@items('Apply_to_each_Source_Record')?['esamk_programmelegal']",
+                      "item/esamk_lut_programme@odata.bind": "esamk_lut_programmes(@{variables('Programme')})",
+                      "item/owningbusinessunit@odata.bind": "businessunits(@{variables('BusinessUnit')})"
+                    },
+                    "authentication": {
+                      "type": "Raw",
+                      "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                    }
+                  }
+                },
+                "Set_variable_2": {
+                  "runAfter": {
+                    "Update_a_Programme_Element": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "0cdc35d8-7eb2-4eb8-96d5-0ee24e6ce2b4"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "ProgrammeElement",
+                    "value": "@outputs('Update_a_Programme_Element')?['body/esamk_lut_programme_elementid']"
+                  }
+                }
+              },
+              "runAfter": {
+                "List_Programme_Element_rows": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "be0ccac5-3c05-431e-842d-37a0a55d9996"
+              },
+              "type": "Foreach"
+            },
+            "If_No_Programme_Element_Found_Create_One": {
+              "actions": {},
+              "runAfter": {
+                "Apply_to_each_Found_Programme_Element": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Create_Programme_Element": {
+                    "runAfter": {},
+                    "metadata": {
+                      "operationMetadataId": "1a0b4298-0a0a-404e-a9bf-aa5abc5ad3a8"
+                    },
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "host": {
+                        "connectionName": "shared_commondataserviceforapps",
+                        "operationId": "CreateRecord",
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                      },
+                      "parameters": {
+                        "entityName": "esamk_lut_programme_elements",
+                        "item/esamk_name": "@items('Apply_to_each_Source_Record')?['esamk_programmeelement']",
+                        "item/esamk_decimalassociatedcostspercentage": "@items('Apply_to_each_Source_Record')?['esamk_decimalassociatedcostspercentage']",
+                        "item/esamk_legal": "@items('Apply_to_each_Source_Record')?['esamk_programmelegal']",
+                        "item/esamk_lut_programme@odata.bind": "esamk_lut_programmes(@{variables('Programme')})",
+                        "item/owningbusinessunit@odata.bind": "businessunits(@{variables('BusinessUnit')})"
+                      },
+                      "authentication": {
+                        "type": "Raw",
+                        "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                      }
+                    }
+                  },
+                  "Set_variable_Programme_Element_2": {
+                    "runAfter": {
+                      "Create_Programme_Element": [
+                        "Succeeded"
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "a0fa9d0a-e750-4e20-881e-5339c3000be4"
+                    },
+                    "type": "SetVariable",
+                    "inputs": {
+                      "name": "ProgrammeElement",
+                      "value": "@outputs('Create_Programme_Element')?['body/esamk_lut_programme_elementid']"
+                    }
+                  }
+                }
+              },
+              "expression": {
+                "greater": [
+                  "@length(outputs('List_Programme_Element_rows')?['body/value'])",
+                  0
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "f65ae2d7-f992-47f9-8308-a80cd6da60a4"
+              },
+              "type": "If"
+            },
+            "List_Programme_Components": {
+              "runAfter": {
+                "Add_Link_to_Programme_Element": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "40cc3c6d-1e0f-4e33-9fa1-61e8bb0da76c"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "ListRecords",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_lut_programme_components",
+                  "fetchXml": "<fetch top=\"50\">\n  <entity name=\"esamk_lut_programme_component\">\n    <filter>\n      <condition attribute=\"esamk_name\" operator=\"eq\" value=\"@{items('Apply_to_each_Source_Record')?['esamk_programmecomponent']}\" />\n      <condition attribute=\"esamk_lut_programme_element\" operator=\"eq\" value=\"@{variables('ProgrammeElement')}\" />\n    </filter>\n  </entity>\n</fetch>",
+                  "$top": 1
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "Apply_to_each_found_Programme_Component": {
+              "foreach": "@outputs('List_Programme_Components')?['body/value']",
+              "actions": {
+                "Update_a_row_2": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "f8ceb4de-a335-47f2-9d71-0549f2ee3c3e"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateOnlyRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "esamk_lut_programme_components",
+                      "recordId": "@items('Apply_to_each_found_Programme_Component')?['esamk_lut_programme_componentid']",
+                      "item/esamk_name": "@items('Apply_to_each_Source_Record')?['esamk_programmecomponent']",
+                      "item/esamk_lut_programme_element@odata.bind": "esamk_lut_programme_elements(@{variables('ProgrammeElement')})",
+                      "item/owningbusinessunit@odata.bind": "businessunits(@{variables('BusinessUnit')})"
+                    },
+                    "authentication": {
+                      "type": "Raw",
+                      "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                    }
+                  }
+                },
+                "Set_variable_Programme_Component_2": {
+                  "runAfter": {
+                    "Update_a_row_2": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "6ca2d744-23d8-4461-84a8-6d9f17eba04e"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "ProgrammeComponent",
+                    "value": "@outputs('Update_a_row_2')?['body/esamk_lut_programme_componentid']"
+                  }
+                }
+              },
+              "runAfter": {
+                "List_Programme_Components": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "ae7d26ad-2b38-46ec-a2a3-f8b0a1643df1"
+              },
+              "type": "Foreach"
+            },
+            "If_not_Programme_Component_Found_Create_One": {
+              "actions": {},
+              "runAfter": {
+                "Apply_to_each_found_Programme_Component": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Add_a_new_row": {
+                    "runAfter": {},
+                    "metadata": {
+                      "operationMetadataId": "4edebe7d-a49e-4add-a0cc-825acc054e4f"
+                    },
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "host": {
+                        "connectionName": "shared_commondataserviceforapps",
+                        "operationId": "CreateRecord",
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                      },
+                      "parameters": {
+                        "entityName": "esamk_lut_programme_components",
+                        "item/esamk_name": "@items('Apply_to_each_Source_Record')?['esamk_programmecomponent']",
+                        "item/esamk_lut_programme_element@odata.bind": "esamk_lut_programme_elements(@{variables('ProgrammeElement')})",
+                        "item/owningbusinessunit@odata.bind": "businessunits(@{variables('BusinessUnit')})"
+                      },
+                      "authentication": {
+                        "type": "Raw",
+                        "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                      }
+                    }
+                  },
+                  "Set_variable_Programme_Component": {
+                    "runAfter": {
+                      "Add_a_new_row": [
+                        "Succeeded"
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "9e9c446e-987c-4904-b980-47302863b841"
+                    },
+                    "type": "SetVariable",
+                    "inputs": {
+                      "name": "ProgrammeComponent",
+                      "value": "@outputs('Add_a_new_row')?['body/esamk_lut_programme_componentid']"
+                    }
+                  }
+                }
+              },
+              "expression": {
+                "greater": [
+                  "@length(outputs('List_Programme_Components')?['body/value'])",
+                  0
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "e8b35a95-eb02-4958-b4be-08bb948c8724"
+              },
+              "type": "If"
+            },
+            "List_Activities": {
+              "runAfter": {
+                "Add_Link_to_Programme_Component": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "6ba64a08-61b2-49ab-9190-a0183b06884e"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "ListRecords",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_lut_activities",
+                  "fetchXml": "<fetch top=\"50\">\n  <entity name=\"esamk_lut_activity\">\n    <filter>\n      <condition attribute=\"esamk_name\" operator=\"eq\" value=\"@{items('Apply_to_each_Source_Record')?['esamk_activityname']}\" />\n      <condition attribute=\"esamk_lut_programme_component\" operator=\"eq\" value=\"@{variables('ProgrammeComponent')}\" />\n    </filter>\n  </entity>\n</fetch>",
+                  "$top": 1
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "Apply_to_each": {
+              "foreach": "@outputs('List_Activities')?['body/value']",
+              "actions": {
+                "Update_Activity": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "ae095fbc-d0c9-4462-abfb-3794774d326a"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateOnlyRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "esamk_lut_activities",
+                      "recordId": "@items('Apply_to_each')?['esamk_lut_activityid']",
+                      "item/esamk_name": "@items('Apply_to_each_Source_Record')?['esamk_activityname']",
+                      "item/esamk_code": "@items('Apply_to_each_Source_Record')?['esamk_activitycode']",
+                      "item/esamk_description": "@items('Apply_to_each_Source_Record')?['esamk_activitydescription']",
+                      "item/esamk_lut_programme_component@odata.bind": "esamk_lut_programme_components(@{variables('ProgrammeComponent')})",
+                      "item/owningbusinessunit@odata.bind": "businessunits(@{variables('BusinessUnit')})",
+                      "item/esamk_plannedamount": "@items('Apply_to_each_Source_Record')?['esamk_plannedamount']"
+                    },
+                    "authentication": {
+                      "type": "Raw",
+                      "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                    }
+                  }
+                },
+                "Set_Activity": {
+                  "runAfter": {
+                    "Update_Activity": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "964eee88-ceea-415b-a073-aaf32181df4d"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "Activity",
+                    "value": "@outputs('Update_Activity')?['body/esamk_lut_activityid']"
+                  }
+                }
+              },
+              "runAfter": {
+                "List_Activities": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "639b8865-a4d4-460b-a318-84763695d371"
+              },
+              "type": "Foreach"
+            },
+            "If_No_Activity_Found_Create_One": {
+              "actions": {},
+              "runAfter": {
+                "Apply_to_each": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Add_a_new_Activity": {
+                    "runAfter": {},
+                    "metadata": {
+                      "operationMetadataId": "19f6ac5d-27cb-4db1-b2e8-4cacc8c7aff7"
+                    },
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "host": {
+                        "connectionName": "shared_commondataserviceforapps",
+                        "operationId": "CreateRecord",
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                      },
+                      "parameters": {
+                        "entityName": "esamk_lut_activities",
+                        "item/esamk_name": "@items('Apply_to_each_Source_Record')?['esamk_activityname']",
+                        "item/esamk_code": "@items('Apply_to_each_Source_Record')?['esamk_activitycode']",
+                        "item/esamk_description": "@items('Apply_to_each_Source_Record')?['esamk_activitydescription']",
+                        "item/esamk_lut_programme_component@odata.bind": "esamk_lut_programme_components(@{variables('ProgrammeComponent')})",
+                        "item/owningbusinessunit@odata.bind": "businessunits(@{variables('BusinessUnit')})",
+                        "item/esamk_plannedamount": "@items('Apply_to_each_Source_Record')?['esamk_plannedamount']"
+                      },
+                      "authentication": {
+                        "type": "Raw",
+                        "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                      }
+                    }
+                  },
+                  "Set_variable_Activity": {
+                    "runAfter": {
+                      "Add_a_new_Activity": [
+                        "Succeeded"
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "c5a94418-bc8d-4e5c-b85b-44c73a3439af"
+                    },
+                    "type": "SetVariable",
+                    "inputs": {
+                      "name": "Activity",
+                      "value": "@outputs('Add_a_new_Activity')?['body/esamk_lut_activityid']"
+                    }
+                  }
+                }
+              },
+              "expression": {
+                "greater": [
+                  "@length(outputs('List_Activities')?['body/value'])",
+                  0
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "dc3e6fb3-2b67-4aba-93fd-a3da1421d255"
+              },
+              "type": "If"
+            },
+            "Add_Link_to_Domain": {
+              "runAfter": {
+                "Check_if_Domain_Found_if_not_Create_One": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "c03bdbf4-59cf-44e9-80b0-a7eb8b152dbe"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "UpdateOnlyRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_workplanses",
+                  "recordId": "@items('Apply_to_each_Source_Record')?['esamk_workplansid']",
+                  "item/esamk_lutDomain@odata.bind": "esamk_lut_domains(@{variables('DomainID')})"
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "Add_Link_to_Programme": {
+              "runAfter": {
+                "Check_if_Programme_Found_if_Not_Create_One": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "bacc8527-bb49-44c4-bb41-ee262a647911"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "UpdateOnlyRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_workplanses",
+                  "recordId": "@items('Apply_to_each_Source_Record')?['esamk_workplansid']",
+                  "item/esamk_lutProgramme@odata.bind": "esamk_lut_programmes(@{variables('Programme')})"
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "Add_Link_to_Programme_Element": {
+              "runAfter": {
+                "If_No_Programme_Element_Found_Create_One": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "60d31b6c-6f7e-4f04-83e0-19cf843702cd"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "UpdateOnlyRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_workplanses",
+                  "recordId": "@items('Apply_to_each_Source_Record')?['esamk_workplansid']",
+                  "item/esamk_lutProgrammeElement@odata.bind": "esamk_lut_programme_elements(@{variables('ProgrammeElement')})"
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "Add_Link_to_Programme_Component": {
+              "runAfter": {
+                "If_not_Programme_Component_Found_Create_One": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "f18ab169-7693-4322-b754-d3b138b556b1"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "UpdateOnlyRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_workplanses",
+                  "recordId": "@items('Apply_to_each_Source_Record')?['esamk_workplansid']",
+                  "item/esamk_lutProgrammeComponent@odata.bind": "esamk_lut_programme_components(@{variables('ProgrammeComponent')})"
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "Add_Link_to_Activity": {
+              "runAfter": {
+                "If_No_Activity_Found_Create_One": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "f18ab169-7693-4322-b754-d3b138b556b1"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "UpdateOnlyRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_workplanses",
+                  "recordId": "@items('Apply_to_each_Source_Record')?['esamk_workplansid']",
+                  "item/esamk_lutActivity@odata.bind": "esamk_lut_activities(@{variables('Activity')})"
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "List_rows_in_Activity_Record_Source": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "537358eb-d44a-4f32-9e0b-de77cfa3a91d"
+          },
+          "type": "Foreach"
+        },
+        "Initialize_Domain_variable": {
+          "runAfter": {
+            "Apply_to_each_2": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "a5bc9547-ebf8-4249-8e8d-f1b14192f1c7"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "DomainID",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_Programme_Element_variable": {
+          "runAfter": {
+            "Initialize_Domain_variable": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d4be037f-e174-4aa2-a511-f5ca0729def5"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ProgrammeElement",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_Programme_variable": {
+          "runAfter": {
+            "Initialize_Programme_Element_variable": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d815f528-ef0d-4776-9e3b-a7e84fe3d9ce"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Programme",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_Programme_Component_variable": {
+          "runAfter": {
+            "Initialize_Programme_variable": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f666d898-3ca9-4cf1-abca-b1cd12b86182"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ProgrammeComponent",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_Activity_variable": {
+          "runAfter": {
+            "Initialize_Programme_Component_variable": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d59ed9f9-5027-4096-9eef-d980fb5e978b"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Activity",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Get_Organisation_Business_Unit": {
+          "runAfter": {
+            "Initialize_variable_BusinessUnit": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "7b43e3e6-c6dc-4e37-a6b0-bdfbb0dc0f96"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "businessunits",
+              "$filter": "parentbusinessunitid eq null\n",
+              "$top": 1
+            },
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+            }
+          }
+        },
+        "Initialize_variable_BusinessUnit": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "6a99e0f4-afc6-47bf-bb4e-e3f3a41bdd88"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "BusinessUnit",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Apply_to_each_2": {
+          "foreach": "@outputs('Get_Organisation_Business_Unit')?['body/value']",
+          "actions": {
+            "Set_variable_Business_Unit": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "cbaee460-2ea6-4f7a-8872-5e721e04071d"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "BusinessUnit",
+                "value": "@items('Apply_to_each_2')?['businessunitid']"
+              }
+            }
+          },
+          "runAfter": {
+            "Get_Organisation_Business_Unit": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "3058ed1a-675d-42ae-8683-25982b2138fc"
+          },
+          "type": "Foreach"
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

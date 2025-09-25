@@ -1,0 +1,707 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "esamk_sharedcommondataserviceforapps_56a48"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_docusigndemo_2": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_shareddocusigndemo_c46e0"
+        },
+        "api": {
+          "name": "shared_docusigndemo"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "When_an_envelope_status_changes_(Connect)_(V3)": {
+          "metadata": {
+            "operationMetadataId": "497a996a-4292-43c9-a507-83a2f7581e4b"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_docusigndemo_2",
+              "operationId": "CreateHookEnvelopeV3",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_docusigndemo"
+            },
+            "parameters": {
+              "accountId": "3433fe0a-8620-4aba-b074-fb913cf9c411",
+              "body/name": "ESA LoS Delivered - ESA KIT",
+              "body/envelopeEvents": "click-agreed"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "actions": {
+        "Initialize_variable_-_Envelope_ID": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "1a5a40e0-d756-4b4c-ac89-fc3210023af9"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Envelope ID",
+                "type": "String",
+                "value": "@triggerOutputs()?['body/data/envelopeSummary/envelopeId']"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_Signer_1_Name": {
+          "runAfter": {
+            "Initialize_variable_-_Envelope_ID": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "88f953a4-39ef-47e7-a053-2bb64f938830"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Signer1",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_Signer_1_Status": {
+          "runAfter": {
+            "Initialize_variable_Signer_1_Name": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "85f8e927-6d3d-4ef5-bb9b-2adce6528980"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Signer1Status",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_Signer_1_Signed": {
+          "runAfter": {
+            "Initialize_variable_Signer_1_Status": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "8f27769c-1ba2-4d8c-8978-a846222f6ceb"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Signer1Signed",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_variable__Signer_2_Name": {
+          "runAfter": {
+            "Initialize_variable_Signer_1_Signed": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "a1bb392b-6602-4edd-8c7c-b9c24bce204c"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Signer2",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_Signer_2_Status": {
+          "runAfter": {
+            "Initialize_variable__Signer_2_Name": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "6890cedc-03a6-49eb-8e42-8efb895c35a6"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Signer2Status",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_variable__Signer_2_Signed": {
+          "runAfter": {
+            "Initialize_variable_Signer_2_Status": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "ed7c6567-1aa8-4319-873f-46dab02fcb4a"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Signer2Signed",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Condition": {
+          "actions": {
+            "Find_LOS_by_Envelopeid": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "cd2e0485-804a-4f22-8955-796800d8613b"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "ListRecords",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_letterofsupport1s",
+                  "$filter": "esamk_envelopeid eq @{variables('Envelope ID')}"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Update_the_D365_LoS_Row": {
+              "foreach": "@outputs('Find_LOS_by_Envelopeid')?['body/value']",
+              "actions": {
+                "Get_a_LoS_row_by_ID_to_Update": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "ef6b8bf4-63a5-42c6-b8aa-dfe9f8d25059"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "GetItem",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "esamk_letterofsupport1s",
+                      "recordId": "@items('Update_the_D365_LoS_Row')?['esamk_letterofsupport1id']"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Condition_Check_if_Status_already_Completed": {
+                  "actions": {},
+                  "runAfter": {
+                    "Condition_-_Check_Signer_2_is_Completed": [
+                      "Succeeded"
+                    ]
+                  },
+                  "else": {
+                    "actions": {
+                      "Set_Status_to_Partially_Signed": {
+                        "runAfter": {},
+                        "metadata": {
+                          "operationMetadataId": "172d7cec-c674-4baf-a762-a65b1db6f895"
+                        },
+                        "type": "OpenApiConnection",
+                        "inputs": {
+                          "host": {
+                            "connectionName": "shared_commondataserviceforapps",
+                            "operationId": "UpdateOnlyRecord",
+                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                          },
+                          "parameters": {
+                            "entityName": "esamk_letterofsupport1s",
+                            "recordId": "@items('Update_the_D365_LoS_Row')?['esamk_letterofsupport1id']",
+                            "item/esamk_docusignstatus": 305290002
+                          },
+                          "authentication": "@parameters('$authentication')"
+                        }
+                      }
+                    }
+                  },
+                  "expression": {
+                    "and": [
+                      {
+                        "equals": [
+                          "@outputs('Get_a_LoS_row_by_ID_to_Update')?['body/esamk_docusignstatus']",
+                          "Completed"
+                        ]
+                      }
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "cef32dfb-ec4a-427f-8d69-ec190a9ba985"
+                  },
+                  "type": "If"
+                },
+                "Condition_-_Check_is_Signer_1_Completed": {
+                  "actions": {
+                    "Update_a_row_-_Signer_1": {
+                      "runAfter": {},
+                      "metadata": {
+                        "operationMetadataId": "172d7cec-c674-4baf-a762-a65b1db6f895"
+                      },
+                      "type": "OpenApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connectionName": "shared_commondataserviceforapps",
+                          "operationId": "UpdateOnlyRecord",
+                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                        },
+                        "parameters": {
+                          "entityName": "esamk_letterofsupport1s",
+                          "recordId": "@items('Update_the_D365_LoS_Row')?['esamk_letterofsupport1id']",
+                          "item/esamk_dtsign1": "@variables('Signer1Signed')"
+                        },
+                        "authentication": "@parameters('$authentication')"
+                      }
+                    }
+                  },
+                  "runAfter": {
+                    "Get_a_LoS_row_by_ID_to_Update": [
+                      "Succeeded"
+                    ]
+                  },
+                  "expression": {
+                    "and": [
+                      {
+                        "equals": [
+                          "@variables('Signer1Status')",
+                          "completed"
+                        ]
+                      }
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "e56ccb05-dd9d-4666-86ca-a736359dff30"
+                  },
+                  "type": "If"
+                },
+                "Condition_-_Check_Signer_2_is_Completed": {
+                  "actions": {
+                    "Update_a_row-_Signer_2": {
+                      "runAfter": {},
+                      "metadata": {
+                        "operationMetadataId": "172d7cec-c674-4baf-a762-a65b1db6f895"
+                      },
+                      "type": "OpenApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connectionName": "shared_commondataserviceforapps",
+                          "operationId": "UpdateOnlyRecord",
+                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                        },
+                        "parameters": {
+                          "entityName": "esamk_letterofsupport1s",
+                          "recordId": "@items('Update_the_D365_LoS_Row')?['esamk_letterofsupport1id']",
+                          "item/esamk_dtsign2": "@variables('Signer2Signed')"
+                        },
+                        "authentication": "@parameters('$authentication')"
+                      }
+                    }
+                  },
+                  "runAfter": {
+                    "Condition_-_Check_is_Signer_1_Completed": [
+                      "Succeeded"
+                    ]
+                  },
+                  "expression": {
+                    "equals": [
+                      "@variables('Signer2Status')",
+                      "completed"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "71573dd6-af30-42fa-a2f1-26642ccc591f"
+                  },
+                  "type": "If"
+                },
+                "Get_BPF": {
+                  "runAfter": {
+                    "Condition_Check_if_Status_already_Completed": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "5a25d1eb-93ae-43f6-8501-81f60fb1dbc4"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "ListRecords",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "esamk_letterofsupportprocesses",
+                      "$select": "businessprocessflowinstanceid,_processid_value",
+                      "$filter": "_bpf_esamk_letterofsupport1id_value eq @{items('Update_the_D365_LoS_Row')?['esamk_letterofsupport1id']}",
+                      "$top": 1
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "GetProcessStage": {
+                  "runAfter": {
+                    "Get_BPF": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "e6830b9c-e015-4734-adce-fc301aa9b941"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "ListRecords",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "processstages",
+                      "$filter": "_processid_value eq  @{first(outputs('Get_BPF')?['body/value'])?['_processid_value']}   and stagename eq 'Partially Signed'",
+                      "$top": 1
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "UpdateBPFStageToPartiallySigned": {
+                  "runAfter": {
+                    "GetProcessStage": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "a3657df6-2ac6-4942-9460-2b68b87c8845"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateOnlyRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "esamk_letterofsupportprocesses",
+                      "recordId": "@first(outputs('Get_BPF')?['body/value'])?['businessprocessflowinstanceid']",
+                      "item/activestageid@odata.bind": "processstages(@{first(outputs('GetProcessStage')?['body/value'])?['processstageid']})",
+                      "item/statecode": 0,
+                      "item/statuscode": 1
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                }
+              },
+              "runAfter": {
+                "Find_LOS_by_Envelopeid": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "6bf04a6a-6f1e-4128-9752-4dcea9e70a71"
+              },
+              "type": "Foreach"
+            }
+          },
+          "runAfter": {
+            "Get_Recipients": [
+              "Succeeded"
+            ]
+          },
+          "expression": {
+            "or": [
+              {
+                "not": {
+                  "equals": [
+                    "@variables('Signer2Signed')",
+                    ""
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "equals": [
+                    "@variables('Signer1Signed')",
+                    ""
+                  ]
+                }
+              }
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "48fa9d8c-efd9-4ec5-9156-a1da6b4e2b55"
+          },
+          "type": "If"
+        },
+        "Get_Recipients": {
+          "actions": {
+            "Filter_array_-_Signer_1": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "5b6031c3-5142-46d0-920b-a9e7a4e121e7"
+              },
+              "type": "Query",
+              "inputs": {
+                "from": "@triggerOutputs()?['body/data/envelopeSummary/recipients/signers']",
+                "where": "@equals(item()?['roleName'], 'Signer 1')"
+              }
+            },
+            "Compose_Signer_1": {
+              "runAfter": {
+                "Filter_array_-_Signer_1": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "8d899410-5e8e-4581-bc12-dd2947c95682"
+              },
+              "type": "Compose",
+              "inputs": "@body('Filter_array_-_Signer_1')?[0]?['name']"
+            },
+            "Compose_Signer_1_Status": {
+              "runAfter": {
+                "Compose_Signer_1": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "23a97070-d649-43a4-9266-3a64ebdaff33"
+              },
+              "type": "Compose",
+              "inputs": "@body('Filter_array_-_Signer_1')?[0]?['status']"
+            },
+            "Compose_Signer_1_Signed": {
+              "runAfter": {
+                "Compose_Signer_1_Status": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "69b80c3b-cc6b-4364-9ac8-ae2ea29bf85b"
+              },
+              "type": "Compose",
+              "inputs": "@body('Filter_array_-_Signer_1')?[0]?['signedDateTime']"
+            },
+            "Set_variable_SIgner1Signed": {
+              "runAfter": {
+                "Compose_Signer_1_Signed": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "86657a5d-26af-4ee0-9077-c15762410b8f"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "Signer1Signed",
+                "value": "@{outputs('Compose_Signer_1_Signed')}"
+              }
+            },
+            "Set_variable_SIgner_1_Status": {
+              "runAfter": {
+                "Set_variable_SIgner1Signed": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "5515edd5-5293-4b0d-b07a-3bc586c00894"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "Signer1Status",
+                "value": "@{outputs('Compose_Signer_1_Status')}"
+              }
+            },
+            "Filter_array_-_Signer_2": {
+              "runAfter": {
+                "Set_variable_SIgner_1_Status": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "5b6031c3-5142-46d0-920b-a9e7a4e121e7"
+              },
+              "type": "Query",
+              "inputs": {
+                "from": "@triggerOutputs()?['body/data/envelopeSummary/recipients/signers']",
+                "where": "@equals(item()?['roleName'], 'Signer 2')"
+              }
+            },
+            "Compose_Signer_2": {
+              "runAfter": {
+                "Filter_array_-_Signer_2": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "8d899410-5e8e-4581-bc12-dd2947c95682"
+              },
+              "type": "Compose",
+              "inputs": "@body('Filter_array_-_Signer_2')?[0]?['name']"
+            },
+            "Compose_Signer_2_Status": {
+              "runAfter": {
+                "Compose_Signer_2": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "88d5d5bc-6546-4d77-b189-127762cec77a"
+              },
+              "type": "Compose",
+              "inputs": "@body('Filter_array_-_Signer_2')?[0]?['status']"
+            },
+            "Compose_Signer_2_Signed": {
+              "runAfter": {
+                "Compose_Signer_2_Status": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "a03dac5d-40fb-4deb-9f9b-1486d919639f"
+              },
+              "type": "Compose",
+              "inputs": "@body('Filter_array_-_Signer_2')?[0]?['signedDateTime']"
+            },
+            "Set_variable_SIgner_2_Signed": {
+              "runAfter": {
+                "Compose_Signer_2_Signed": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "ea734281-80b9-4433-aecb-ec480e78bbe4"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "Signer2Signed",
+                "value": "@{outputs('Compose_Signer_2_Signed')}"
+              }
+            },
+            "Set_variable_Signer_2_Status": {
+              "runAfter": {
+                "Set_variable_SIgner_2_Signed": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "939afac9-e03e-4b1e-b9ea-0fe8a0aca070"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "Signer2Status",
+                "value": "@{outputs('Compose_Signer_2_Status')}"
+              }
+            }
+          },
+          "runAfter": {
+            "Get_Envelope_Custom_Field_Data": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "057ea469-7ac1-433b-89e7-a2678992f743"
+          },
+          "type": "Scope"
+        },
+        "Get_Envelope_Custom_Field_Data": {
+          "actions": {
+            "Parse_JSON_-_Custom_Fields": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "e313a107-9ba0-4b20-b918-89c5d2c9bb89"
+              },
+              "type": "ParseJson",
+              "inputs": {
+                "content": "@triggerOutputs()?['body/data/envelopeSummary/customFields']",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "Member State": {},
+                    "Activity Title": {}
+                  }
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Compose_-_Envelope_Body": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "48fa0626-499e-4c7d-aa65-22af796c594e"
+          },
+          "type": "Scope"
+        },
+        "Compose_-_Envelope_Body": {
+          "runAfter": {
+            "Flow_Information": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "3fbb5ba2-0aa8-4342-8d5e-de808126b0d7"
+          },
+          "type": "Compose",
+          "inputs": "@triggerOutputs()?['body']"
+        },
+        "Flow_Information": {
+          "runAfter": {
+            "Initialize_variable__Signer_2_Signed": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "398556a4-80c0-4994-9ff5-3194138a2d6c"
+          },
+          "type": "Compose",
+          "inputs": "Account: DocuSign Demo\n\nAccountID: @{triggerOutputs()?['body/data/envelopeSummary/sender/accountId']}\n\nAccount Site: Demo\n\nConnect Name: LoS - Delivered\n\nPower Automate Trigger (Custom Field): @{equals(triggerBody()?['data']?['envelopeSummary']?['customFields']?['Power Automate Trigger'],'Letter of Support')}\n\n\nUse Case Name: Letter of Support\n\nTempalteID: https://apps-d.docusign.com/send/templates/details/84910cfc-531e-46cd-b540-a892f8d79128\n\nFlow Built By: Nathan Brewer"
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

@@ -1,0 +1,27 @@
+function hideButtonBasedOnUserType(executionContext) {
+    var formContext = executionContext.getFormContext();
+    
+    // Get the current user's user ID
+    var userId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "");
+
+    // Use Web API to retrieve the user's 'esamk_usertype'
+    Xrm.WebApi.retrieveRecord("systemuser", userId, "?$select=esamk_usertype").then(
+        function (result) {
+            var userType = result["esamk_usertype"];
+
+            // Check if the user type is 'Delegate' (assuming 305290001 is the value for Delegate)
+            if (userType === 305290001) {
+                // Get the button control by its name or ID (replace "your_button_name" with the actual button name)
+                var button = formContext.ui.controls.get("Send to Specifiers");
+
+                if (button) {
+                    // Hide the button if the user type is Delegate
+                    button.setVisible(false);
+                }
+            }
+        },
+        function (error) {
+            console.log("Error retrieving user type: " + error.message);
+        }
+    );
+}

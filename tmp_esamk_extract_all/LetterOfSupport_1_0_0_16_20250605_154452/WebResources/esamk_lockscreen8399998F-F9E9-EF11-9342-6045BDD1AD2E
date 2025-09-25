@@ -1,0 +1,12 @@
+    disableForm: function (executionContext) {
+        let formContext = executionContext.getFormContext();
+
+        let formControls = formContext.ui.controls;
+
+        formControls.forEach(control => {
+            if (control.getName() != "" && control.getName() != null) {
+                control.setDisabled(true);
+            }
+        });
+
+    }

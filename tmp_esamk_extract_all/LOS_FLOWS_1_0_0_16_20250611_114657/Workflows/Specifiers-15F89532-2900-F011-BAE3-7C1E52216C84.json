@@ -1,0 +1,164 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "esamk_sharedcommondataserviceforapps_56a48"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "When_a_row_is_added,_modified_or_deleted": {
+          "metadata": {
+            "operationMetadataId": "4a6e94bb-a3b8-4f2a-9a56-24ad33196529"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "SubscribeWebhookTrigger",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "subscriptionRequest/message": 4,
+              "subscriptionRequest/entityname": "esamk_letterofsupport1",
+              "subscriptionRequest/scope": 4
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "actions": {
+        "Compose": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "28b764b9-cc6a-46f3-bbe4-4b5b6b280790"
+          },
+          "type": "Compose",
+          "inputs": "@triggerOutputs()?['body/_esamk_memberstate_value']"
+        },
+        "Condition": {
+          "actions": {
+            "Update_a_row_2": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "ead3ad0d-8d09-41e6-aa5c-95ab0b4b5b91"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "UpdateOnlyRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_letterofsupport1s",
+                  "recordId": "@triggerOutputs()?['body/esamk_letterofsupport1id']",
+                  "item/esamk_docusignstatus": 305290007,
+                  "item/esamk_previousmemberstate": "@triggerOutputs()?['body/_esamk_memberstate_value']"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Get_a_row_by_ID": {
+              "runAfter": {
+                "Update_a_row_2": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "3fc4b7e4-1f55-418a-903e-f96561e763f0"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "GetItem",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_memberstates",
+                  "recordId": "@triggerOutputs()?['body/_esamk_memberstate_value']"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Update_a_row": {
+              "runAfter": {
+                "Get_a_row_by_ID": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "b72df3b1-f3f9-4ada-b8ed-f92ef1a816cb"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "UpdateOnlyRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "esamk_letterofsupport1s",
+                  "recordId": "@triggerOutputs()?['body/esamk_letterofsupport1id']",
+                  "item/esamk_primaryspecifieremailfreetype": "@outputs('Get_a_row_by_ID')?['body/esamk_primaryspecifieremail']",
+                  "item/esamk_primaryspecifierfreetype": "@outputs('Get_a_row_by_ID')?['body/esamk_primaryspecifiername']",
+                  "item/esamk_secondaryspecifieremailfreetype": "@outputs('Get_a_row_by_ID')?['body/esamk_secondaryspecifieremail']",
+                  "item/esamk_secondaryspecifiernamefreetype": "@outputs('Get_a_row_by_ID')?['body/esamk_secondaryspecifiername']"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            }
+          },
+          "runAfter": {
+            "Compose": [
+              "Succeeded"
+            ]
+          },
+          "expression": {
+            "and": [
+              {
+                "not": {
+                  "equals": [
+                    "@outputs('Compose')",
+                    "@triggerOutputs()?['body/esamk_previousmemberstate']"
+                  ]
+                }
+              },
+              {
+                "equals": [
+                  "@triggerOutputs()?['body/esamk_jsusertype']",
+                  "'ESA'"
+                ]
+              }
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "7a1698cb-05dc-43b3-80bb-55879cd0cfa2"
+          },
+          "type": "If"
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

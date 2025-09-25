@@ -1,0 +1,96 @@
+function updateAndNotify(primaryControl) {
+    console.log("🟢 Function 'updateAndNotify' triggered");
+
+    try {
+        if (!primaryControl) {
+            console.error("❌ No primaryControl passed to function");
+            alert("Primary Control not available. Please check Ribbon setup.");
+            return;
+        }
+
+        const entityId = primaryControl.data?.entity?.getId()?.replace(/[{}]/g, "");
+        const entityName = primaryControl.data?.entity?.getEntityName();
+
+        console.log("📄 Entity Name:", entityName);
+        console.log("🆔 Entity ID:", entityId);
+
+        if (!entityId || !entityName) {
+            throw new Error("Could not retrieve entity info. Ensure the record is saved.");
+        }
+
+        const updateData = {
+            esamk_submit: "SendNow"
+        };
+
+        console.log("📦 Update Payload:", updateData);
+
+        // Optional placeholder — actual button disabling is done via Enable Rule
+        disableRibbonButton(primaryControl);
+
+        // Update the record via Web API
+        console.log("🚀 Attempting to update record...");
+        Xrm.WebApi.updateRecord(entityName, entityId, updateData).then(
+            function success(result) {
+                console.log("✅ Record updated successfully:", result);
+                showToast("Submit In Progress", 2); // Success
+                setTimeout(() => {
+                    console.log("🔄 Refreshing form...");
+                    primaryControl.data.refresh();
+                }, 1000);
+            },
+            function (error) {
+                console.error("❌ Web API error:", error.message);
+                showToast("Error: " + error.message, 4); // Error
+            }
+        );
+    } catch (error) {
+        console.error("❗ Try/Catch Error:", error.message);
+        showToast("Error: " + error.message, 4);
+    }
+}
+
+// 🔔 Show toast-style notification
+function showToast(message, type) {
+    console.log("🔔 Showing toast notification:", message);
+    Xrm.App.addGlobalNotification({
+        type: type, // 1 = Info, 2 = Success, 3 = Warning, 4 = Error
+        level: 200000,
+        message: message,
+        showCloseButton: true
+    }).then(function (id) {
+        setTimeout(() => {
+            Xrm.App.clearGlobalNotification(id);
+        }, 4000);
+    });
+}
+
+// 🔒 Placeholder for Ribbon disabling — use Enable Rule instead
+function disableRibbonButton(primaryControl) {
+    console.log("ℹ️ Ribbon button can be disabled via Enable Rules, not JavaScript.");
+}
+
+// ✅ Enable Rule Function — Disable button if already submitted
+function isNotSubmitted(primaryControl) {
+    try {
+        console.log("🟠 Enable Rule: isNotSubmitted triggered");
+
+        if (!primaryControl) {
+            console.warn("⚠️ primaryControl not provided");
+            return true;
+        }
+
+        var attr = primaryControl.getAttribute("esamk_submit");
+        if (!attr) {
+            console.log("ℹ️ Field 'esamk_submit' not found on form. Assuming not submitted.");
+            return true;
+        }
+
+        var value = attr.getValue();
+        console.log("📝 esamk_submit value:", value);
+
+        return value !== "SendNow" && value !== "Sent";
+    } catch (e) {
+        console.error("❗ Enable Rule Error:", e.message);
+        return true;
+    }
+}
